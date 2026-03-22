@@ -1,0 +1,185 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Account - AI Sentinel</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 30px 40px; width: 100%; max-width: 400px; text-align: center; }
+        h1 { color: #0d1137; margin-bottom: 15px; }
+        p { color: #606770; font-size: 15px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn { background-color: #1877f2; color: white; border: none; padding: 12px; font-size: 16px; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; width: 100%; }
+        .btn:hover { background-color: #166fe5; }
+        .flash-message { padding: 15px; margin-bottom: 20px; border-radius: 8px; font-size: 14px; }
+        .flash-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1>Check Your Email</h1>
+        <p>We've sent a 6-digit verification code to <strong>{{ email }}</strong>. It will expire in 10 minutes.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('verify_otp', email=email) }}">
+            <div class="form-group">
+                <label for="otp">Verification Code (OTP)</label>
+                <input type="text" id="otp" name="otp" required>
+            </div>
+            <button type="submit" class="btn">Verify Account</button>
+        </form>
+    </div>
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Account - AI Sentinel</title>
+    <style>
+        /* --- DARK THEME --- */
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --input-bg: #333;
+            --border-color: #444;
+            --accent-color: #1877f2;
+            --accent-hover: #166fe5;
+            --text-muted: #aaa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #90caf9;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        p strong {
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #ccc;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: white;
+            box-sizing: border-box;
+            font-size: 18px; /* Larger font for OTP */
+            letter-spacing: 2px; /* Spacing for readability */
+            text-align: center;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Flash Messages */
+        .flash-message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: left;
+        }
+        .flash-danger { background-color: #b71c1c; color: #ffebee; border: 1px solid #c62828; }
+        .flash-success { background-color: #1b5e20; color: #e8f5e9; border: 1px solid #2e7d32; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1>Check Your Email</h1>
+        <p>We've sent a 6-digit verification code to <strong>{{ email }}</strong>. It will expire in 10 minutes.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('verify_otp', email=email) }}">
+            <div class="form-group">
+                <label for="otp">Verification Code (OTP)</label>
+                <input type="text" id="otp" name="otp" required placeholder="000000" maxlength="6">
+            </div>
+            <button type="submit" class="btn">Verify Account</button>
+        </form>
+    </div>
+</body>
+</html>

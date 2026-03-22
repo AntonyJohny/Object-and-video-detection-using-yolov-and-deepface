@@ -1,0 +1,21 @@
+# Environments and Cache
+venv/
+__pycache__/
+.hintrc
+instance/
+
+# Heavy Model Files (Too big for GitHub)
+weights/
+yolov7/*.pt
+yolov7/*.weights
+
+# Private Data (Don't upload faces of people!)
+face_dataset/
+person_snapshots/
+unknown_snapshots/
+uploads/
+face_database.pkl
+
+# Logs
+*.csv
+*.log
